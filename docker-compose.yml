@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  user-service:
+    build:
+      context: ./user-service
+    ports:
+      - '8000:8000'
+    depends_on:
+      - mongo-user
+      - rabbitmq
+
+  wallet-service:
+    build:
+      context: ./wallet-service
+    ports:
+      - '7000:7000'
+    depends_on:
+      - mongo-wallet
+      - redis
+      - rabbitmq
+
+  mongo-user:
+    image: mongo:4.4
+    container_name: mongo-user
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-user-data:/data/db
+
+  mongo-wallet:
+    image: mongo:4.4
+    container_name: mongo-wallet
+    ports:
+      - '27018:27017'
+    volumes:
+      - mongo-wallet-data:/data/db
+
+  redis:
+    image: redis:6.2
+    container_name: redis
+    ports:
+      - '6379:6379'
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+volumes:
+  mongo-user-data:
+  mongo-wallet-data:
