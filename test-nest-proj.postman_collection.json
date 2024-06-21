@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "5df14a35-3681-4bfd-8170-4d90e9de4cf5",
+		"name": "test-nest-proj",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27212483",
+		"_collection_link": "https://bold-escape-508326.postman.co/workspace/bold-escape-508326-Workspace~b8a0226c-e362-47ad-867a-3d8620b68014/collection/27212483-5df14a35-3681-4bfd-8170-4d90e9de4cf5?action=share&source=collection_link&creator=27212483"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "create user ",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\":\"amirkh\",\n    \"firstName\":\"amir\",\n    \"lastName\":\"khalili\",\n    \"email\":\"amir1378khalili@gmail.com\",\n    \"gender\":\"male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find one user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/user/66759d05994abf1111bbf950",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"66759d05994abf1111bbf950"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\":\"amirkh1\",\n    \"firstName\":\"amir1\",\n    \"lastName\":\"khalisli1\",\n    \"email\":\"amir1378khalili@gmail.com\",\n    \"gender\":\"male\",\n    \"amount\": 120\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/user/66759d05994abf1111bbf950",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"66759d05994abf1111bbf950"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "wallet",
+			"item": [
+				{
+					"name": "get wallets ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/wallet",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"wallet"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
