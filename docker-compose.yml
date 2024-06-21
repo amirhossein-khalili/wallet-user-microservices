@@ -54,17 +54,16 @@ services:
     networks:
       - app-network
 
-  nginx:
-    image: nginx:latest
+  api-gateway:
+    build:
+      context: ./api-gateway
     ports:
-      - '80:80'
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - '3000:3000'
+    networks:
+      - app-network
     depends_on:
       - user-service
       - wallet-service
-    networks:
-      - app-network
 
 networks:
   app-network:
