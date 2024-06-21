@@ -7,17 +7,23 @@ import {
   BadRequestException,
   Get,
   NotFoundException,
+  Inject,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './dto';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    @Inject('WALLET_SERVICE') private readonly client: ClientProxy,
+  ) {}
 
   @Get('')
   async findAll() {
-    const selection = '_id userName firstName lastName gender';
+    const selection =
+      '_id userName firstName lastName gender createdAt updatedAt';
     return this.userService.findAll(selection);
   }
 
@@ -34,20 +40,31 @@ export class UserController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    /*
+    
+    this part check if there is not a user with the given id return error
+    
+    */
     const existingUser = await this.userService.findOne(id);
     if (!existingUser) throw new NotFoundException('User not found');
-
+    /*
+    
+    this part check if there is already another user with the same user name return an error
+    
+    */
     const checkUserWithUserName = await this.userService.findByUsername(
       updateUserDto.userName,
     );
-
-    console.log(existingUser);
     if (
       checkUserWithUserName &&
       String(checkUserWithUserName._id) != String(existingUser._id)
     )
       throw new BadRequestException('please try with another username');
-
+    /*
+    
+    this part update another field of the user data and in service it check if it contain the amount emit the event of the wallet service
+    
+    */
     return this.userService.update(id, updateUserDto);
   }
 

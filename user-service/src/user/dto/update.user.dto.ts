@@ -1,4 +1,10 @@
-import { IsString, IsOptional, IsEnum, Length } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsEnum,
+  Length,
+  IsNumber,
+} from 'class-validator';
 
 export class UpdateUserDto {
   @IsOptional()
@@ -17,4 +23,8 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   lastName?: string;
+
+  @IsOptional()
+  @IsNumber()
+  amount?: number;
 }
