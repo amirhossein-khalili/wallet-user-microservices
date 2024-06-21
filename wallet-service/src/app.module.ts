@@ -24,17 +24,21 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
       inject: [ConfigService],
     }),
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'WALLET_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: [
-            'amqps://oshghfds:tQi23MMPiX0K7I4Y_8haBH-SazFn2vrT@jackal.rmq.cloudamqp.com/oshghfds',
-          ],
-          queue: 'wallet_queue',
-          queueOptions: { durable: false },
-        },
+        imports: [ConfigModule],
+        useFactory: async (configService: ConfigService) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: [configService.get<string>('RABBIT_MQ')],
+            queue: 'wallet_queue',
+            queueOptions: {
+              durable: false,
+            },
+          },
+        }),
+        inject: [ConfigService],
       },
     ]),
     WalletModule,
