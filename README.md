@@ -100,5 +100,3 @@ This project consists of a microservices architecture designed to provide variou
 - For any questions or support, please contact [Amir1378khalili@gmail.com].
 
 ---
-
-Make sure to replace placeholders like `<repository-url>` and `<repository-directory>` with actual values specific to your project.
