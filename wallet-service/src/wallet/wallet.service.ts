@@ -10,7 +10,6 @@ import { Wallet, WalletDocument } from './schemas/wallet.schema';
 export class WalletService {
   constructor(
     @InjectModel(Wallet.name) private walletModel: Model<WalletDocument>,
-    // @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
@@ -39,25 +38,28 @@ export class WalletService {
     return existingWallet;
   }
 
-  async findAll(seletion?: string) {
-    return this.walletModel.find().select(seletion).exec();
+  async findAll(selection?: string) {
+    return this.walletModel.find().select(selection).exec();
   }
 
-  async findOne(id: string, seletion?: string) {
-    return this.walletModel.findById(id).select(seletion).exec();
+  async findOne(id: string, selection?: string) {
+    return this.walletModel.findById(id).select(selection).exec();
   }
 
-  async findWithUseId(userId: string, seletion?: string) {
-    return this.walletModel.findOne({ userId: userId }).select(seletion).exec();
+  async findWithUseId(userId: string, selection?: string) {
+    return this.walletModel
+      .findOne({ userId: userId })
+      .select(selection)
+      .exec();
   }
 
-  async findWalletAmountWithUseId(userId: string, seletion?: string) {
+  async findWalletAmountWithUseId(userId: string, selection?: string) {
     const amount = await this.cacheManager.get(String(userId));
 
     if (!amount) {
       const wallet = await this.walletModel
         .findOne({ userId: userId })
-        .select(seletion)
+        .select(selection)
         .exec();
       await this.cacheManager.set(String(userId), wallet.amount);
 
@@ -69,9 +71,6 @@ export class WalletService {
   async updateWithUserId(userId: string, amount: number) {
     await this.cacheManager.set(String(userId), amount);
 
-    const res = await this.cacheManager.get(String(userId));
-
-    console.log(res);
     return this.walletModel
       .findOneAndUpdate({ userId }, { $set: { amount } }, { new: true })
       .exec();
