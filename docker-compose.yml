@@ -6,19 +6,16 @@ services:
       context: ./user-service
     ports:
       - '8000:8000'
-    depends_on:
-      - mongo-user
-      - rabbitmq
+    networks:
+      - app-network
 
   wallet-service:
     build:
       context: ./wallet-service
     ports:
       - '7000:7000'
-    depends_on:
-      - mongo-wallet
-      - redis
-      - rabbitmq
+    networks:
+      - app-network
 
   mongo-user:
     image: mongo:4.4
@@ -27,6 +24,8 @@ services:
       - '27017:27017'
     volumes:
       - mongo-user-data:/data/db
+    networks:
+      - app-network
 
   mongo-wallet:
     image: mongo:4.4
@@ -35,12 +34,16 @@ services:
       - '27018:27017'
     volumes:
       - mongo-wallet-data:/data/db
+    networks:
+      - app-network
 
   redis:
     image: redis:6.2
     container_name: redis
     ports:
       - '6379:6379'
+    networks:
+      - app-network
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -48,6 +51,24 @@ services:
     ports:
       - '5672:5672'
       - '15672:15672'
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - user-service
+      - wallet-service
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   mongo-user-data:
