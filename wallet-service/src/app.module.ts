@@ -6,16 +6,24 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CacheModule } from '@nestjs/cache-manager';
 import { RedisOptions } from './common/redis/redis.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
     CacheModule.register({ isGlobal: true }),
     CacheModule.registerAsync(RedisOptions),
-    MongooseModule.forRoot('mongodb://localhost/nest-wallet'),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_DB'),
+        dbName: 'wallet',
+      }),
+      inject: [ConfigService],
+    }),
     ClientsModule.register([
       {
         name: 'WALLET_SERVICE',

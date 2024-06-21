@@ -4,12 +4,24 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { User, UserSchema } from './schemas/user.schema';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    MongooseModule.forRoot('mongodb://localhost/nest-user'),
+    ConfigModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
 
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_DB'),
+        dbName: 'wallet',
+      }),
+      inject: [ConfigService],
+    }),
     ClientsModule.register([
       {
         name: 'WALLET_SERVICE',
