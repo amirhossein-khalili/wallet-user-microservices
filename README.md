@@ -97,7 +97,7 @@ This project consists of a microservices architecture designed to provide variou
 
 ## Contact
 
-- For any questions or support, please contact [Amir1378khalili@gmail.com@example.com].
+- For any questions or support, please contact [Amir1378khalili@gmail.com].
 
 ---
 
