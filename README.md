@@ -14,19 +14,20 @@ This project consists of a microservices architecture designed to provide variou
 
 - **Framework:** NestJS
 - **Database:** MongoDB
-- **Description:** Manages user-related operations such as registration, authentication, and user data management.
+- **Description:** Manages user-related operations such as user data management.
 
-### 2. Volt Service
+### 2. wallet Service
 
 - **Framework:** NestJS
 - **Cache:** Redis
 - **Database:** MongoDB
-- **Description:** Handles operations related to Volt functionalities, leveraging Redis for caching to improve performance.
+- **Description:** Handles operations related to wallet functionalities, leveraging Redis for caching to improve performance.
 
 ### 3. API Gateway
 
 - **Framework:** Express
 - **Logger:** Integrated logging system
+  **RateLimitter:** contains RateLimitter
 - **Description:** Acts as an entry point for all client requests, routing them to the appropriate microservices. It also logs all incoming requests for monitoring and debugging purposes.
 
 ## Communication
@@ -95,19 +96,10 @@ This project consists of a microservices architecture designed to provide variou
 ## Usage
 
 - Once all services are up and running, you can interact with the API Gateway to access different functionalities provided by the microservices.
-- Refer to the API documentation (if available) for detailed information on available endpoints and their usage.
-
-## Contributing
-
-- Contributions are welcome! Please fork the repository and submit a pull request for any changes.
-
-## License
-
-- This project is licensed under the MIT License.
 
 ## Contact
 
-- For any questions or support, please contact [your-email@example.com].
+- For any questions or support, please contact [Amir1378khalili@gmail.com@example.com].
 
 ---
 
