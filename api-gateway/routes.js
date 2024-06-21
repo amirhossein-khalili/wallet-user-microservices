@@ -5,7 +5,7 @@ const ROUTES = [
     creditCheck: false,
     rateLimit: {
       windowMs: 15 * 60 * 1000,
-      max: 5,
+      max: 15,
     },
     proxy: {
       target: 'http://localhost:8000/api/user',
@@ -21,7 +21,7 @@ const ROUTES = [
     creditCheck: true,
     rateLimit: {
       windowMs: 15 * 60 * 1000,
-      max: 5,
+      max: 15,
     },
     proxy: {
       target: 'http://localhost:7000/api/wallet',
